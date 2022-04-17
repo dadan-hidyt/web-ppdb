@@ -1,11 +1,3 @@
 <?php 
-class Email {
-	
-}
-
-
-
-
-
-
+//script disini
  ?>
