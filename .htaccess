@@ -1,0 +1,13 @@
+RewriteEngine on
+Options -indexes
+#ajax
+RewriteRule ^ajax/([a-zA-Z0-9_-]+)(|/)$ AjaxRequests.php?xhrh=$1 [QSA]
+#auth
+RewriteRule ^logout(|/)$ index.php?r=auth/logout [QSA]
+RewriteRule ^login(|/)$ index.php?r=auth/login [QSA]
+RewriteRule ^registrasi(|/)$ index.php?r=auth/register [QSA]
+RewriteRule ^registrasi/verifikasi(|/)$ index.php?r=auth/verify_account [QSA]
+RewriteRule ^pendaftaran/dashboard(|/)$ index.php?r=pendaftaran/dashboard/main [QSA]
+RewriteRule ^pendaftaran/dashboard/formulir(|/)$ index.php?r=pendaftaran/formulir/isi_formulir [QSA]
+RewriteRule ^pendaftaran/dashboard/formulir/view(|/)$ index.php?r=pendaftaran/formulir/view [QSA]
+RewriteRule ^pendaftaran/dashboard/berkas(|/)$ index.php?r=pendaftaran/berkas/berkas [QSA]

@@ -1,3 +1,7 @@
 <?php 
-//script disini
+class Email 
+{
+	
+}
+
  ?>
