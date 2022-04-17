@@ -134,7 +134,7 @@ function array2obj($array = array()) {
     $obj = new StdClass();
     if (!empty($array)) {
         foreach ($array as $key => $value) {
-            $obj->$key = $value;
+            $obj->$key = array2obj($value);
         }
     }
     return $obj;
