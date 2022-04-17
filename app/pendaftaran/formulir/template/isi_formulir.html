@@ -1,0 +1,421 @@
+<style>
+	.form-control{
+		border-radius: 0px;
+	}
+	.card {
+		background:white;
+		border:none;
+		box-shadow:none;
+	}
+	.required{
+		color: red;
+	}
+	hr{
+		border: 1px dotted #dedede;
+	}
+</style>
+<?php
+$jalur_pendaftaran = $GLOBALS['pendaftaran']->getJalurPendaftaran();
+?>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb breadcrumb-style2 mb-0">
+			<li class="breadcrumb-item">
+				<a href="<?php echo base_url('pendaftaran/dashboard') ?>">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="javascript:void(0);">Formulir</a>
+			</li>
+		</ol>
+	</nav>
+	<div class="mt-4 mb-4"></div>
+	<div style="border-radius: 10px;" class="card mb-4">
+		<!-- data calon siswa -->
+		<h5 class="card-header">FORMULIR PENDAFTARAN </h5>
+		<div class="card-body">	
+			<p><b>NOTE: </b>tanda <span class="required">*</span> artinya bidang itu Wajib di isi</p>
+			<form id="form-pendaftaran" method="POST" enctype="multipart/form-data" action="">	
+				<div class="row">
+					<div class="col-md-6 mb-4">
+						<input type="hidden" name="token_csrf" value="{{global->csrf_token}}">
+						<span><b>A.DATA SISWA</b></span>
+						<hr>
+						<div class="mb-3">
+							<label class="col-form-label">KODE PENDAFTARAN</label>
+							<div class="col-md-12">
+								<input class="form-control" readonly value="{{me->kode_pendaftaran}}">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="nama_lengkap" class="col-form-label">NAMA LENGKAP <span class="required"></span></label>
+							<div class="col-md-12">
+								<input class="form-control" required="true" type="text" name="nama_lengkap" readonly value="{{me->full_name}}" id="nama_lengkap">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="nisn" class="col-form-label">NISN <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" type="text" required name="nisn" readonly value="{{me->nisn}}." id="nisn">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="nik_siswa" class="col-form-label">NIK <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" type="number" placeholder="NO KK (16 digit)" required name="nik_siswa" id="nik_siswa">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="jenis_kelamin" class="col-form-label">JENIS KELAMIN <span class="required">*</span></label>
+							<div class="col-md-12">
+								<select name="jenis_kelamin" class="form-control" required id="jenis_kelamin">
+									<option value="Laki-Laki">Laki-Laki</option>
+									<option value="Perempuan">Perempuan</option>
+									<option value="Rahasia">Rahasia</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="tempat_lahir" class="col-form-label">TEMPAT LAHIR <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" required placeholder="Ketikan tempat kelahiran kamu" name="tempat_lahir" type="text" id="tempat_lahir">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="tanggal_lahir" class="col-form-label">TANGGAL LAHIR <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" required name="tanggal_lahir" type="date" id="tanggal_lahir">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="agama" class="col-form-label">Agama <span class="required">*</span></label>
+							<div class="col-md-12">
+								<select class="form-control" required name="agama" id="agama">
+									<option value="islam">islam</option>
+									<option value="Protestan">Protestan</option>
+									<option value="katolik">katolik</option>
+									<option value="hindu">hindu</option>
+									<option value="buddha">buddha</option>
+									<option value="Khonghucu">Khonghucu</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="nomortelepon" class="col-form-label">NOMOR TELEPON/WA <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" required placeholder="ketikan nomor telepon atau wa yang aktif" type="tel" name="nomor_telepon_siswa" id="nomortelepon">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="hobi" class="col-form-label">HOBI</label>
+							<div class="col-md-12">
+								<input class="form-control" placeholder="ketikan hobi kamu (optional)" name="hobi" type="hobi" id="hobi">
+							</div>
+						</div>
+						<!-- alamat -->
+						<div class="mb-3">
+							<label for="kota" class="col-form-label">KOTA SAAT INI <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input required class="form-control" placeholder="ketikan nama kota saat ini anda tinggal" name="kota" type="text" id="kota">
+							</div>
+						</div>
+						<!-- kecamatan -->
+						<div class="mb-3">
+							<label for="kecamatan" class="col-form-label">KECAMATAN SAAT INI <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input required class="form-control"  placeholder="ketikan nama kecamatan saat ini anda tinggal" name="kecamatan" type="text" id="kecamatan">
+							</div>
+						</div>
+						<!-- kelurahan -->
+						<div class="mb-3">
+							<label for="kelurahanordesa" class="col-form-label">KELURAHAN/DESA SAAT INI <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input required class="form-control" placeholder="ketikan nama kelurahan/desa saat ini anda tinggal" name="kelurahanordesa" type="text" id="kelurahanordesa">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="alamat_lengkap" class="col-form-label">ALAMAT LENGKAP <span class="required">*</span></label>
+							<div class="col-md-12">
+								<textarea required name="alamat_lengkap" id="alamat_lengkap" cols="10" placeholder="ketikan alamat lengkap kamu saat ini" rows="2" class="form-control"></textarea>
+							</div>
+						</div>
+						<!-- data registrasi peserta -->
+						<span class="mt-4 mb-3"><b>B. DATA REGISTRASI PESERTA</b></span>
+						<hr>
+						<div class="mb-3">
+							<label for="asal_sekolah" class="col-form-label">ASAL SEKOLAH <span class="required">*</span></label>
+							<div class="col-md-12">
+								<input class="form-control" name="asal_sekolah" required type="text" id="asal_sekolah">
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="tahun_lulus" class="col-form-label">TAHUN LULUS <span class="required">*</span></label>
+							<div class="col-md-12">
+								<select class="form-control" name="tahun_lulus" id="tahun_lulus">
+									<?php 
+									$end = date("Y", strtotime("-1 year"));
+									for($i= 2018;$i<=$end;$i++) {
+									?>
+									<option value="<?= $i; ?>"><?= $i; ?></option>
+									<?php
+								}
+
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="berat_badan" class="col-form-label">BERAT BADAN (KG)</label>
+						<div class="col-md-12">
+							<input class="form-control" name="berat_badan" type="number" id="berat_badan">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="tinggi_badan" class="col-form-label">TINGGI BADAN (CM)</label>
+						<div class="col-md-12">
+							<input class="form-control" name="tinggi_badan" type="number" id="tinggi_badan">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="anak_ke" class="col-form-label">ANAK KE</label>
+						<div class="col-md-12">
+							<input class="form-control" name="anak_ke" type="number" id="anak_ke">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="jumlah_saudara" class="col-form-label">JUMLAH SAUDARA KANDUNG</label>
+						<div class="col-md-12">
+							<input class="form-control" name="jumlah_saudara" type="number" id="jumlah_saudara">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="jurusan" class="col-form-label">JURUSAN YANG DI PILIH  <span class="required">*</span></label>
+						<div class="col-md-12">
+							<select required="true"  class="form-control" name="jurusan" id="jurusan">
+								<option value="RPL">RPL</option>
+								<option value="MM">MULTIMEDIA</option>
+								<option value="TEKNIK MESIN">TEKNIK MESIN</option>
+								<option value="TEKNIK AV">AV</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="jurusan2" class="col-form-label">JURUSAN PILIHAN KEDUA <span class="required">*</span></label>
+						<div class="col-md-12">
+							<select required="true" class="form-control" name="jurusan2" id="jurusan2">
+								<option value="MM">MULTIMEDIA</option>
+								<option value="RPL">RPL</option>
+								<option value="TEKNIK MESIN">TEKNIK MESIN</option>
+								<option value="TEKNIK AV">AV</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="jalur_pendaftaran" class="col-form-label">JALUR PENDAFTARAN <span class="required">*</span></label>
+						<div class="col-md-12">
+							<select class="form-control" required id="jalur_pendaftaran" name="jalur_pendaftaran">
+								<?php if(!empty($jalur_pendaftaran)): ?>
+								<?php foreach($jalur_pendaftaran as $k): ?>
+								<option value="<?= $k['kode']; ?>"><?= $k['nama']; ?></option>
+								<?php endforeach; ?>
+								<?php endif; ?>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="alamt_asal_sekolah"  class="col-form-label">ALAMAT SEKOLAH ASAL <span class="required">*</span></label>
+						<div class="col-md-12">
+							<textarea name="alamat_sekolah_asal" required="true" id="alamt_asal_sekolah" cols="3" rows="3" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="poto" class="col-form-label">PHOTO <span class="required"></span></label>
+						<div class="col-md-12">
+							<input accept="image/*" required class="form-control" type="file" value="18" name="photo" id="poto">
+						</div>
+					</div>
+				</div>
+				<!-- data orang tua -->
+				<div class="col-md-6">
+					<span><b>C. DATA ORANG TUA</b></span>
+					<hr>
+					<div class="mb-3">
+						<label for="nama_ayah" class="col-form-label">NAMA AYAH</label>
+						<div class="col-md-12">
+							<input class="form-control" type="text" name="nama_ayah" id="nama_ayah">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pendidikan_terakhir_ayah" class="col-form-label">PENDIDKAN TERAKHIR AYAH</label>
+						<div class="col-md-12">
+							<select name="pendidikan_terakhir_ayah" class="form-control" id="pendidikan_terakhir_ayah">
+								<option value="SD">SD Sederajat</option>
+								<option value="SMP">SMP</option>
+								<option value="SMK/SMA">SMK/SMA</option>
+								<option value="KULIAH">KULIAH</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pekerjaan_ayah" class="col-form-label">PEKERJAAN AYAH</label>
+						<div class="col-md-12">
+							<select name="pekerjaan_ayah" class="form-control" id="pekerjaan_ayah">
+								<option value="Wiraswasta">Wiraswasta</option>
+								<option value="PNS">Pns</option>
+								<option value="Petani">Petani</option>
+								<option value="GUR">Guru</option>
+								<option value="Ibu rumah tangga">Ibu rumah tangga</option>
+								<option value="Lannya">Lainya</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pendapatan_ayah" class="col-form-label">PENDAPATAN BULANAN</label>
+						<select class="form-control" name="pendapatan_ayah" id="">
+							<option value="Kurang dari 1.000.000,00">Kurang dari 1.000.000,00</option>
+							<option value="Lebih dari 1.000.000,00">Kurang dari 1.000.000,00</option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="TELEPON_ayah" class="col-form-label">TELEPON/WA</label>
+						<div class="col-md-12">
+							<input class="form-control" placeholder="ketikan nomor ayah kamu(opsional)" name="nomor_telepon_ayah" type="tel" id="TELEPON_ayah">
+						</div>
+					</div>
+
+					<div class="divider">
+                        <div class="divider-text">Data IBU</div>
+                      </div>
+					<!-- data ibu -->
+					<div class="mb-3">
+						<label for="nama_ibu" class="col-form-label">NAMA IBU</label>
+						<div class="col-md-12">
+							<input class="form-control" type="text" name="nama_ibu" id="nama_ibu">
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pendidikan_terakhir_ibu" class="col-form-label">PENDIDIKAN TERAKHIR IBU</label>
+						<div class="col-md-12">
+							<select name="pendidikan_terakhir_ibu" class="form-control" id="pendidikan_terakhir_ibu">
+								<option value="SD">SD Sederajat</option>
+								<option value="SMP">SMP</option>
+								<option value="SMK/SMA">SMK/SMA</option>
+								<option value="KULIAH">KULIAH</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pekerjaan_ibu" class="col-form-label">PEKERJAAN</label>
+						<div class="col-md-12">
+							<select name="pekerjaan_ibu" class="form-control" id="pekerjaan_ibu">
+								<option value="Wiraswasta">Wiraswasta</option>
+								<option value="PNS">Pns</option>
+								<option value="Petani">Petani</option>
+								<option value="GUR">Guru</option>
+								<option value="Ibu rumah tangga">Ibu rumah tangga</option>
+								<option value="Lannya">Lainya</option>
+							</select>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="pendapatan_ibu" class="col-form-label">PENDAPATAN BULANAN</label>
+						<select class="form-control" name="pendapatan_ibu" id="pendapatan_ibu">
+							<option value="Kurang dari 1.000.000,00">Kurang dari 1.000.000,00</option>
+							<option value="Lebih dari 1.000.000,00">Lebih dari 1.000.000,00</option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="TELEPON_ibu" class="col-form-label">NOMOR TELEPON/WA</label>
+						<div class="col-md-12">
+							<input class="form-control" placeholder="ketikan nomor ibu kamu(opsional)" name="nomor_telepon_ibu" type="tel" id="TELEPON_ibu">
+						</div>
+					</div>
+
+				</div>
+				<!-- /data ortu -->
+			</div>
+			<!-- HTML !-->
+			<button id="button_submit_form" class="btn btn-primary" role="button">Kirim</button> &nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-danger" type="button" onclick="window.location.reload()">KOSONGKAN FORMULIR</button>
+		</form>
+
+	</div>
+</div>
+</div>
+</div>
+<!-- script -->
+<script>
+	function loading(loading = "show") {
+		if (loading == "show") {
+			$("#button_submit_form").html(`<div class="spinner-border spinner-border-sm text-secondary" role="status">
+				<span class="visually-hidden">Loading...</span>
+				</div>`);
+			$("#button_submit_form").addClass("disabled");
+		} else if(loading == "hide") {
+			$("#button_submit_form").html('kirim');
+			$("#button_submit_form").removeClass("disabled");
+
+		}
+	}
+	/**
+	 * ajax request
+	 * */
+	 jQuery(document).ready(function(){
+	 	let url = "{{config->base_url}}";
+	 	jQuery("#form-pendaftaran").on("submit",function(event){
+	 		event.preventDefault();
+	 		Swal.fire({
+	 			icon:"question",
+	 			showCancelButton:true,
+	 			confirmButtonText:"Lanjutkan",
+	 			cancelButtonColor:"red",
+	 			confirmButtonColor:"blue",
+	 			text:"Apakah anda yakin formulir anda sudah lengkap?"
+	 		}).then(function(e){
+	 			if (e.isConfirmed) {
+	 				loading();
+	 				let data = new FormData(event.target);
+	 				$.ajax({
+	 					url:"{{config->base_url}}ajax/pendaftaran?type=new_submit_form",
+	 					type:"POST",
+	 					processData:false,
+	 					contentType:false,
+	 					cache:false,
+	 					data:data,
+	 					success:function(response) {
+	 						if (response.code == 200) {
+	 							if (response.success == true) {
+	 								Swal.fire({
+	 									icon:"success",
+	 									text:response.message,
+	 								}).then(function(res){
+	 									if (res.isConfirmed) {
+	 										location.href="{{config->base_url}}pendaftaran/dashboard/formulir/view";
+	 									} else {
+	 										location.href="{{config->base_url}}pendaftaran/dashboard/formulir/view";
+	 									}
+	 								});
+	 								loading("hide");
+	 							} else {
+	 								swal.fire({
+	 									icon: "error",
+	 									text: `${response.message}`
+	 								});
+	 								loading("hide");
+	 							}
+	 						} else {
+	 							swal.fire({
+	 								icon:"error",
+	 								title:response.code,
+	 								text:response.message
+	 							});
+	 							loading("hide");
+	 						}
+	 					},
+
+	 				});
+	 			}
+	 		});
+	 	})
+	 });
+	</script>
+<!-- /script -->

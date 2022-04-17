@@ -1,0 +1,100 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <div class="app-brand demo">
+    <a href="index.html" class="app-brand-link">
+      <!-- <span class="app-brand-logo demo">
+       
+  </span> -->
+  <span class="app-brand-text demo menu-text fw-bolder ms-2">SMK BISA</span>
+</a>
+
+<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+  <i class="bx bx-chevron-left bx-sm align-middle"></i>
+</a>
+</div>
+
+<div class="menu-inner-shadow"></div>
+<?php 
+//page link active
+$hal = $_SERVER['REQUEST_URI'];
+$hals = explode('/', $hal);
+if (!empty($hals)) {
+  $hals = array_values($hals);
+  foreach ($hals as $us) {
+    if (!empty($us)) {
+      $current = $us;
+  }
+ }
+}
+?>
+<ul class="menu-inner py-1">
+  <!-- Dashboard -->
+  <li class="menu-item <?= $current == 'dashboard' ? 'active' : '' ?>">
+    <a href="{{config->base_url}}pendaftaran/dashboard" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-home-circle"></i>
+      <div data-i18n="Analytics">Dashboard</div>
+    </a>
+  </li>
+
+  <!-- Layouts -->
+  <li class="menu-item <?= $current == 'formulir' || $current=='view' ? 'active' : '' ?>">
+    <a href="{{config->base_url}}pendaftaran/dashboard/formulir" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-edit"></i>
+      <div data-i18n="Layouts">Formulir</div>
+    </a>
+  </li>
+  <li class="menu-item <?= $current == 'berkas' ? 'active' : '' ?>">
+    <a href="{{config->base_url}}pendaftaran/dashboard/berkas" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-file"></i>
+      <div data-i18n="Analytics">Upload Berkas</div>
+    </a>
+  </li>
+
+  <li class="menu-item <?= $current == 'cetak' ? 'active' : '' ?>">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+      <i class="menu-icon tf-icons bx bx-printer"></i>
+      <div data-i18n="Authentications">Cetak</div>
+    </a>
+    <ul class="menu-sub">
+      <li class="menu-item <?= $current == 'kartu-ujian' ? 'active' : '' ?>">
+        <a href="auth-login-basic.html" class="menu-link" target="_blank">
+          <div data-i18n="Basic">Katru Ujian</div>
+        </a>
+      </li>
+      <li class="menu-item <?= $current == 'bukti-pendaftaran' ? 'active' : '' ?>">
+        <a href="auth-register-basic.html" class="menu-link" target="_blank">
+          <div data-i18n="Basic">Bukti Pendaftaran</div>
+        </a>
+      </li>
+
+    </ul>
+  </li>
+  <li class="menu-item <?= $current == 'bantuan' ? 'active' : '' ?>">
+    <a href="{{config->base_url}}pendaftaran/dashboard/bantuan" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-help-circle"></i>
+      <div data-i18n="Analytics">Bantuan</div>
+    </a>
+  </li>
+  <li class="menu-item <?= $current == 'logout' ? 'active' : '' ?>">
+    <a onclick="return logout()" href="{{config->base_url}}logout" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-log-out"></i>
+      <div data-i18n="Analytics">Logout</div>
+    </a>
+  </li>
+</ul>
+</aside>
+<script>
+  function logout() {
+    swal.fire({
+    icon:"question",
+    text:"Apakah anda yakin ingin keluar?",
+    confirmButtonText:"Ya! lanjutkan",
+    showCancelButton:true,
+  }).then(function(e){
+    if (e.isConfirmed) {
+      location.href='{{config->base_url}}logout';
+    }
+  });
+  return false;
+  }
+</script>
+<!-- end sidebar -->

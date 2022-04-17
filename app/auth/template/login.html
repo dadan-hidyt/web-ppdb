@@ -1,0 +1,119 @@
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<!-- Register -->
+			<div class="card">
+				<div class="card-body">
+					<!-- Logo -->
+					<div class="app-brand justify-content-center">
+						<a href="index.html" class="app-brand-link gap-2">
+							<span class="app-brand-text demo text-body fw-bolder">{{config->site_title}}</span>
+						</a>
+					</div>
+					<form id="login-form" class="mb-3" action="" method="POST">
+						<input type="hidden" name="protek" value="{{global->csrf_token}}">
+						<div class="mb-3">
+							<label for="email" class="form-label">Nisn/email</label>
+							<input type="text" class="form-control" id="email" name="nisn-email" placeholder="Enter your email or username" autofocus
+							/>
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<div class="d-flex justify-content-between">
+								<label class="form-label" for="password">Password</label>
+								<a href="auth-forgot-password-basic.html">
+									<small>Lupa Password?</small>
+								</a>
+							</div>
+							<div class="input-group input-group-merge">
+								<input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"
+								/>
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+							</div>
+						</div>
+						<div class="mb-3">
+							<div class="form-check">
+								<input class="form-check-input" name="remember" type="checkbox" id="remember-me" />
+								<label class="form-check-label" for="remember-me"> Remember Me </label>
+							</div>
+						</div>
+						<div class="mb-3">
+							<button id="btn-login" class="btn btn-primary d-grid w-100" type="submit">Login</button>
+						</div>
+					</form>
+					<p class="text-center">
+						<span>Belum ada akun?</span>
+						<a href="{{config->base_url}}registrasi">
+							<span>Buat akun</span>
+						</a>
+					</p>
+				</div>
+			</div>
+			<!-- /Register -->
+		</div>
+	</div>
+</div>	
+<?php $backUrl = isset($_GET['backTo']) ? $_GET['backTo'] : ""; ?>
+<!-- / Content -->
+<script>
+
+	jQuery(document).ready(function($) {
+		$("#login-form").on("submit", function(event) {
+			event.preventDefault();
+			$("#btn-login").addClass("disabled");
+			$("#btn-login").html("Authenticate...");
+			//form data
+			const data = new FormData(event.target);
+			$.ajax({
+				url: "{{config->base_url}}login?backTo=<?= $backUrl; ?>",
+				type: "POST",
+				cache:false,
+				processData:false,
+				contentType:false,
+				data:data,
+				success:function(e){
+					if (e.status == "200") {
+						if (e.responData.login == true) {
+							Swal.fire({
+								icon:"success",
+								text:`${e.responData.mssg ?? null}`
+							});
+							$("#btn-login").html("Redirect...");
+							setTimeout(function(){
+								if (e.responData.backurl) {
+									location.href=`${e.responData.backurl}`;
+								} else {
+									location.href=`pendaftaran/dashboard`;
+								}
+							},3000);
+						} else {
+							Swal.fire({
+								icon:"error",
+								text:`${e.responData.mssg ?? null}`
+							});
+							
+						}
+					} else {
+						Swal.fire({
+							icon:"error",
+							text:`${e.responData.mssg ?? null}`
+						});
+					}
+					$("#btn-login").removeClass("disabled");
+					$("#btn-login").html("login");
+				},
+				error:function(error) {
+					if (error.status == 404 || error.status == 500) {
+						alert("Kesalahan server silahkan coba lagi");
+					} else if(error.status == 0) {
+						alert("Periksa koneksi internet anda");
+					}
+					$("#btn-login").removeClass("disabled");
+					$("#btn-login").html("login");
+				}
+				
+
+			});
+		})
+	})
+
+</script>

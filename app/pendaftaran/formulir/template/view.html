@@ -1,0 +1,174 @@
+<?php
+$kodePendaftaran = User::getInstance()->getUserInfo()['kode_pendaftaran'];
+$pendaftaran = Pendaftaran::instance();
+$pendaftaran->setKodePendaftaran($kodePendaftaran);
+//data folmulir calon siswa yang sudah mengisi formulir pendaftaran
+$data = $pendaftaran->getFormulirPendaftaran();
+
+?>
+<style>
+    .card{
+        border-radius: 10px;
+        box-shadow: none;
+    }
+</style>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb breadcrumb-style2 mb-0">
+			<li class="breadcrumb-item">
+				<a href="<?php echo base_url('pendaftaran/dashboard') ?>">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="javascript:void(0);">Folmulir</a>
+			</li>
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">View</a>
+            </li>
+        </ol>
+    </nav>
+    <!-- folmulir pendaftaran view -->
+    <div class="mb-4 mt-4"></div>
+    <div class="card">
+       <div class="card-header">
+           <div class="card-title"><b>FORMULIR PENDAFTARAN</b></div>
+           <b>Status: 
+            <?php if ($data['status'] == 0): ?>
+            <span style="background: orange;color: white;border-radius:3px;padding: 4px;box-sizing: border-box;font-size: 10px;text-transform: uppercase;">Belum di verifikasi</span>
+            <?php elseif ($data['status'] == 1 ): ?>
+            <span style="background: green;color: white;border-radius:3px;padding: 4px;box-sizing: border-box;font-size: 10px;text-transform: uppercase;">Sudah Diverifikasi <i style="font-size: small;" class="bx bx-check-circle"></i></span>
+            <button class="btn btn-danger btn-xs">Cetak <i class="bx bx-printer"></i></button>
+            <?php elseif ($data['status'] == 2 ): ?>
+            <span style="background: red;color: white;border-radius:3px;padding: 4px;box-sizing: border-box;font-size: 10px;text-transform: uppercase;">Gagal di verifikasi</span>
+            <?php else: ?>
+            <span style="background: orange;color: white;border-radius:3px;padding: 4px;box-sizing: border-box;font-size: 10px;text-transform: uppercase;">Belum di verifikasi</span>
+            <?php endif; ?>
+        </b>
+    </div>
+    <div class="card-body">
+       <div class="table-responsive" style="overflow-x: auto;">
+        <table style="width: 470px;">
+            <tr>
+                <th>KD PENDAFTARAN :&nbsp;&nbsp;&nbsp; </th>
+                <th><?= field_kosong($data['kode_pendaftaran']); ?></th>
+            </tr>
+            <tr>
+                <th>A. DATA SISWA</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <td>Nama Lengkap    :</td>
+                <td><?= field_kosong($data['nama_lengkap']); ?></td>
+            </tr>
+            <tr>
+                <td>NISN  :</td>
+                <td><?= field_kosong($data['nisn']);?></td>
+            </tr>
+            <tr>
+                <td>JENIS KELAMIN  :</td>
+                <td><?= field_kosong($data['jenis_kelamin']); ?></td>
+            </tr>
+            <tr>
+                <td>TEMPAT LAHIR  :</td>
+                <td><?= field_kosong($data['tempat_lahir']); ?></td>
+            </tr> <tr>
+                <td>TANGGAL LAHIR :</td>
+                <td><?= field_kosong($data['tanggal_lahir']); ?></td>
+            </tr> <tr>
+                <td>AGAMA  :</td>
+                <td><?= field_kosong($data['agama']); ?></td>
+            </tr> <tr>
+                <td>NIK SISWA  :</td>
+                <td><?= field_kosong($data['nik_siswa']); ?></td>
+            </tr> <tr>
+                <td>TELEPON SISWA  :</td>
+                <td><?= field_kosong($data['telepon_siswa']); ?></td>
+            </tr>
+            <tr>
+                <td>HOBI  :</td>
+                <td><?= field_kosong($data['hobi']); ?></td>
+            </tr>
+            <tr>
+                <td>KOTA  :</td>
+                <td><?= field_kosong($data['kota']); ?></td>
+            </tr>
+            <tr>
+                <td>KECAMATAN  :</td>
+                <td><?= field_kosong($data['kecamatan']); ?></td>
+            </tr> <tr>
+                <td>KELURAHAN  :</td>
+                <td><?= field_kosong($data['kelurahan']); ?></td>
+            </tr> <tr>
+                <td>ALAMAT SISWA  :</td>
+                <td><?= field_kosong($data['alamat_siswa']); ?></td>
+            </tr> <tr>
+                <td>SEKOLAH ASAL  :</td>
+                <td><?= field_kosong($data['asal_sekolah']); ?></td>
+            </tr> <tr>
+                <td>TAHUN LULUS  :</td>
+                <td><?= field_kosong($data['tahun_lulus']); ?></td>
+            </tr>
+            <tr>
+                <td>BERAT BADAN  :</td>
+                <td><?= field_kosong($data['berat_badan']); ?> KG</td>
+            </tr>
+            <tr>
+                <td>TINGGI BADAN  :</td>
+                <td><?= field_kosong($data['tinggi_badan']); ?> CM</td>
+            </tr>
+            <tr>
+                <td>ANAK KE  :</td>
+                <td><?= field_kosong($data['anak_ke']); ?> dari <?= field_kosong($data['jumlah_saudara']); ?> bersaudara</td>
+            </tr>
+            <tr>
+                <td>ALAMAT SEKOLAH ASAL  :</td>
+                <td><?= field_kosong($data['alamat_sekolah_asal']); ?></td>
+            </tr>
+            <tr>
+                <th>B. Data Orang Tua</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <td>NAMA AYAH  :</td>
+                <td><?= field_kosong($data['nama_ayah']); ?></td>
+            </tr>
+            <tr>
+                <td>PENDIDKAN TERAKHIR AYAH  :</td>
+                <td><?= field_kosong($data['pendidkan_terakhir_ayah']); ?></td>
+            </tr>
+            <tr>
+                <td>PEKERJAAN AYAH  :</td>
+                <td><?= field_kosong($data['pekerjaan_ayah']); ?></td>
+            </tr>
+            <tr>
+                <td>PENGHASILAN AYAH  :</td>
+                <td><?= field_kosong($data['pendapatan_ayah']); ?> / bulan</td>
+            </tr>
+            <tr>
+                <td>NOMOR HP/WA AYAH  :</td>
+                <td><?= field_kosong($data['nomor_telepon_ayah']); ?></td>
+            </tr>
+            <tr>
+                <td>NAMA IBU  :</td>
+                <td><?= field_kosong($data['nama_ibu']); ?></td>
+            </tr>
+            <tr>
+                <td>PENDIDKAN TERAKHIR IBU  :</td>
+                <td><?= field_kosong($data['pendidikan_terakhir_ibu']); ?></td>
+            </tr>
+            <tr>
+                <td>PEKERJAAN IBU  :</td>
+                <td><?= field_kosong($data['pekerjaan_ibu']); ?></td>
+            </tr>
+            <tr>
+                <td>NOMOR HP/WA IBU  :</td>
+                <td><?= field_kosong($data['nomor_telepon_ibu']); ?></td>
+            </tr>
+            <tr>
+                <td>PENGHASILAN IBU  :</td>
+                <td><?= field_kosong($data['pendapatan_ibu']); ?>  / bulan</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+</div>

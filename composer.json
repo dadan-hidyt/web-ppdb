@@ -1,0 +1,14 @@
+{
+    "name": "dadanhidyt/webppdb",
+    "description": "aplikasi ppdb untuk sekolah",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    },
+    "authors": [
+        {
+            "name": "dadanhidyt",
+            "email": "dadanhidyt@gmail.com"
+        }
+    ]
+}

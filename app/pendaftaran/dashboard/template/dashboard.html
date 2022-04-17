@@ -1,0 +1,72 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="row">
+    <div class="col-lg-12 mb-4 order-0">
+      <?php
+      $user = User::getInstance()->getUserInfo();
+      $pendaftaran = Pendaftaran::instance();
+      //set kode pendaftaran
+      $pendaftaran->setKodePendaftaran($user['kode_pendaftaran']);
+      $statusPendaftaran = $pendaftaran->cekStatusPendaftaran();
+      ?>
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-sm-7">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Selamat sore {{me->full_name}} <i class='bx bx-upside-down'></i></h5>
+              <p class="mb-4">
+                Silahkan lengkapi formulir pendaftaran kamu! dan lengkapi persyaratan pendaftaran nya! Jika masih bingung dan perlu bantuan kamu bisa menghubungi panitia ppdb atau klik tombol bantuan
+              </p>
+              <a href="#" class="btn btn-sm btn-outline-primary"><i class='bx bxl-whatsapp'></i>Whatsapp</a> &nbsp;<a href="#" class="btn btn-sm btn-outline-primary"><i class='bx bx-help-circle'></i>Bantuan</a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+<?php 
+//jika berkas sudah di upload lebih dari 3
+//upload berkas mencukupi
+$berkas = false;
+if (!empty($pendaftaran->berkasPendaftaran()) && count($pendaftaran->berkasPendaftaran()) >= 3) {
+  $berkas = true;
+}
+
+ ?>
+      <div class="col-12">
+        <div class="card mb-4">
+          <h5 class="card-header">MENU</h5>
+          <div class="card-body">
+            <a class="link-menu" href="{{config->base_url}}pendaftaran/dashboard/formulir">
+             <div class="menu-item-brdr mb-3 card">
+              <div class="card-body">
+                <b><i class="bx bx-edit"></i>&nbsp;ISI FOLMULIR <?= $statusPendaftaran == true ? '<i class="bx bx-check-circle text-success"></i>' : "";?></b>
+              </div>
+            </div>
+          </a>
+          <a class="link-menu" href="">
+           <div class="menu-item-brdr mb-3 card">
+            <div class="card-body">
+              <b><i class="bx bx-cloud-upload"></i>&nbsp;UPLOAD BERKAS <?= $berkas == true ? '<i class="bx bx-check-circle text-success"></i>' : "";?></b>
+            </div> 
+          </div>
+        </a>
+        <a class="link-menu" href="">
+         <div class="menu-item-brdr mb-3 card">
+          <div class="card-body">
+            <b><i class="bx bx-printer"></i>&nbsp;CETAK FORMULIR</b>
+          </div> 
+        </div>
+      </a>
+      <a class="link-menu" href="">
+       <div class="menu-item-brdr mb-3 card">
+        <div class="card-body">
+          <b><i class="bx bx-cog"></i>PENGATURAN AKUN</b>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+</div>
+</div>
+</div>

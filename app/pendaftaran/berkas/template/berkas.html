@@ -1,0 +1,188 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb breadcrumb-style2 mb-0">
+			<li class="breadcrumb-item">
+				<a href="<?php echo base_url('pendaftaran/dashboard') ?>">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="javascript:void(0);">Berkas</a>
+			</li>
+		</ol>
+	</nav>
+	<div class="mt-4"></div>
+	<div class="card">
+		<h5 class="card-header">Berkas Pendaftaran saya</h5>
+		<?php if ($GLOBALS['pendaftaran']->cekStatusPendaftaran()): ?>
+			<div class="container">
+				<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#fullscreenModal">
+					TAMBAH BERKAS <i class="bx bx-plus"></i>
+				</button>
+			</div>
+
+		<?php endif ?>
+		<?php if ($GLOBALS['pendaftaran']->cekStatusPendaftaran()): ?>
+			<div class="card-body">
+				<div class="text-nowrap">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Nama berkas</th>
+								<th>Format</th>
+								<th>File link</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if (!empty($GLOBALS['pendaftaran']->berkasPendaftaran())): ?>
+								<?php foreach ($GLOBALS['pendaftaran']->berkasPendaftaran() as $value): ?>
+									<?php 
+									//jadi di database ada datanya tapi file nya tidak ada di gambar
+									//maka lanjutkan ke loop selanjutnya
+									if (!file_exists($value['file'])) {
+										continue;
+									} else {
+										?>
+										<tr>
+											<td>
+												<i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><?= $value['nama_berkas']; ?></strong>
+											</td>
+											<td><?= strtoupper(pathinfo($value['file'],PATHINFO_EXTENSION)); ?></td>
+											<td>
+												<a href="{{config->base_url}}<?= $value['file']; ?>" target="__blank">BUKA FILE</a>
+											</td>
+											<td>
+												<?php if ($value['status'] == 0): ?>
+													<span class="badge bg-label-danger me-1">Belum Diverifikasi</span>
+													<?php elseif($value['status'] == 1): ?>
+														<span class="badge bg-label-success me-1">Diverifikasi</span>
+													<?php endif ?>
+												</td>
+												<td>
+													<div class="dropdown">
+														<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+															<i class="bx bx-dots-vertical-rounded"></i>
+														</button>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<?php
+										}
+										?>
+									<?php endforeach ?>
+									<?php else: ?>
+										<tr>
+											<td colspan="6">Belum ada data apapun...</td>
+										</tr>
+									<?php endif; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<?php else: ?>
+						<div class="card-body">
+							<p class="alert alert-warning">
+								<b>OOPS!!! </b> silahkan lengkapi formulir anda terlebih dahulu untuk mengupload berkas persyaratan!
+								<a href="">Isi Formulir</a>	
+							</p>
+						</div>
+					<?php endif ?>
+				</div>
+			</div>
+			<!-- modal page -->
+			<div class="mt-3">
+				<!-- Modal -->
+				<div class="modal fade" id="fullscreenModal" tabindex="-1" aria-hidden="true" style="display: none;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modalFullTitle">Modal title</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<form id="form-upload-berkas" action="" method="POST" enctype="multipart/form-data">
+									<div class="form-group">
+										<div class="err">
+
+										</div>
+										<div id="upload-progress" class="mb-2">
+											<div class="progress">
+												<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+													0%
+												</div>
+											</div>
+										</div>
+										<label for="nama">Nama berkas</label>
+										<select class="form-control" name="nama_berkas" id="nama">
+											<option value="Ktp ibu">KTP IBU</option>
+											<option value="Ktp Ayah">KTP AYAH</option>
+											<option value="Kartu Keluarga">KARTU KELUARGA</option>
+											<option value="Kip">KIP</option>
+											<option value="Akta kelahiran">Akta kelahiran</option>
+										</select>
+									</div>
+									<div class="mt-3"></div>
+									<div class="form-group">
+										<label for="file">File</label>
+										<input type="file" name="file" id="file" class="form-control">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+										Close
+									</button>
+									<button type="submit" id="btn-upload" class="btn btn-primary">Upload</button>
+								</div>	
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+			//ajax untuk menyimpan data dengan ajax
+			$(document).ready(function(){
+				let form = $("form[id='form-upload-berkas']");
+				form.on("submit",function(event){
+					event.preventDefault();
+					$("#btn-upload").addClass("disabled");
+					let file = event.target.file.files[0] ?? null;
+					if (file === null) {
+						$(".err").html(`<p class='alert alert-warning'>silahkan pilih file yang mau di upload dulu</p>`);
+					}  else {
+						let data = new FormData(event.target);
+						data.append("token_csrf","{{global->csrf_token}}");
+						let ajax = new XMLHttpRequest();
+						ajax.open("POST", "{{config->base_url}}ajax/upload_berkas");
+						ajax.responseType = "json";
+						//progress bar
+						ajax.upload.addEventListener("progress",function(e){
+							let persen = Math.round(e.loaded/e.total*100);
+							$("#upload-progress").html(`<div class="progress">
+								<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: ${persen}%" aria-valuenow="${persen}" aria-valuemin="0" aria-valuemax="100">
+								${persen}%
+								</div>
+								</div>`);
+						});
+						//response jika file berhasil di upload
+						ajax.onload = function(e) {
+							if (e.target.status==200) {
+								if (e.target.response.status == true && e.target.response.code == 200) {
+									$("#upload-progress").html(`<p class="alert alert-success">${e.target.response.message}</p>`);
+									location.reload();
+								} else {
+									$("#upload-progress").html(`<p class="alert alert-danger">${e.target.response.message}</p>`);
+								}
+								$("#btn-upload").removeClass("disabled");
+							}
+						}
+						ajax.send(data);
+
+						
+					}
+				});
+			});	
+		</script>

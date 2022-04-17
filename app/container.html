@@ -1,0 +1,101 @@
+<?php $page = isset(self::$app->page) ? strtolower( self::$app->page) : null; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=none">
+	<link rel="icon" type="image/x-icon" href="{{config->base_url}}assets/img/favicon/favicon.ico" />
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{config->base_url}}assets/vendor/fonts/boxicons.css" />
+	<!-- Core CSS -->
+	<link rel="stylesheet" href="{{config->base_url}}assets/vendor/css/core.css" />
+	<link rel="stylesheet" href="{{config->base_url}}assets/vendor/css/theme-default.css" />
+	<link rel="stylesheet" href="{{config->base_url}}assets/css/demo.css">
+	<!-- page css -->
+	{{app->css_page}}
+	<!-- vendor -->
+	<link rel="stylesheet" href="{{config->base_url}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+	<link rel="stylesheet" href="{{config->base_url}}assets/vendor/libs/virtual-select/virtual-select.min.css" />
+	<!-- Helpers -->
+	<script src="{{config->base_url}}assets/vendor/js/helpers.js"></script>
+	<script src="{{config->base_url}}assets/js/config.js"></script>
+	<!-- core js -->
+	<script src="{{config->base_url}}assets/vendor/libs/jquery/jquery.js"></script>
+	<!-- js vendor -->
+	<script src="{{config->base_url}}assets/vendor/libs/virtual-select/virtual-select.min.js"></script>
+	<link rel="stylesheet" href="{{config->base_url}}assets/css/style.css" />
+	<!-- sweet alert -->
+	<script src="{{config->base_url}}assets/js/sweetalert2.all.min.js"></script>
+	<title>{{app->title}} &raquo; {{config->site_title}}</title>
+</head>
+<body>
+	
+	<?php if ($page == 'dashboard'): ?>
+	<!-- <div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+	</div>
+	<script>
+		$(document).ready(function() {
+
+			setTimeout(function(){
+				$('body').addClass('loaded');
+				$('h1').css('color','#222222');
+			}, 2000);
+
+		});
+	</script> -->
+	<!-- Layout wrapper -->
+	<div class="layout-wrapper layout-content-navbar">
+		<div class="layout-container">
+			<!-- start sidebar -->
+			{{app->sidebar}}
+			<!-- /sidebar -->
+			<!-- Layout container -->
+			<div class="layout-page">
+				<!-- navbar -->
+				{{app->navbar}}
+				<!-- /navbar -->
+				<!-- Content wrapper -->
+				<div class="content-wrapper">
+					<!-- Content -->
+					<?php endif; ?>
+					{{app->content}}
+					<?php if ($page == 'dashboard'): ?>
+					<!-- Footer -->
+					<footer class="content-footer footer bg-footer-theme">
+						<div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+							<div class="mb-2 mb-md-0">
+								Copyright 2021-
+								<script>
+									document.write(new Date().getFullYear());
+								</script>
+								&copy;
+								<a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">hidytstudio</a>
+							</div>
+						</footer>
+						<!-- / Footer -->
+						<div class="content-backdrop fade"></div>
+					</div>
+					<!-- Content wrapper -->
+				</div>
+				<!-- /layout contaienr -->
+			</div>
+			<!-- Overlay -->
+			<div class="layout-overlay layout-menu-toggle"></div>
+		</div>
+		<!-- /Layout wrapper -->
+		<?php endif; ?>
+		<script src="{{config->base_url}}assets/vendor/libs/popper/popper.js"></script>
+		<script src="{{config->base_url}}assets/vendor/js/bootstrap.js"></script>
+		<script src="{{config->base_url}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+		<script src="{{config->base_url}}assets/vendor/js/menu.js"></script>
+		<script src="{{config->base_url}}assets/js/main.js"></script>
+		<!-- page js -->
+		{{app->page_js}}
+	</body>
+	</html>

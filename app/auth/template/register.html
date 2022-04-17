@@ -1,0 +1,106 @@
+<!-- halaman daftar -->
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<!-- Register Card -->
+			<div class="card">
+				<div class="card-body">
+					<!-- Logo -->
+					<div class="app-brand justify-content-center">
+						<a href="{{config->base_url}}" class="app-brand-link gap-2">
+							<span class="app-brand-logo demo">
+							</span>
+							<span class="app-brand-text demo text-body fw-bolder">{{config->site_title}}</span>
+						</a>
+					</div>
+					<div id="error"></div>
+					<form id="formAuthentication" class="mb-3" method="POST">
+						<div class="mb-3">
+							<input type="hidden" name="token_csrf" value="{{global->csrf_token}}">
+							<label for="nama lengkap" class="form-label">nama lengkap</label>
+							<input type="text" class="form-control" id="nama lengkap" name="nama_lengkap" placeholder="Ketikan nama lengkap kamu" autofocus />
+						</div>
+						<div class="mb-3">
+							<input type="hidden" name="token_csrf" value="{{global->csrf_token}}">
+							<label for="nisn" class="form-label">nisn</label>
+							<input type="text" class="form-control" id="nisn" name="nisn" placeholder="Ketikan nisn kamu" autofocus />
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email</label>
+							<input type="text" class="form-control" id="email" name="email" placeholder="Ketikan email kamu" />
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<label class="form-label" for="password">Password</label>
+							<div class="input-group input-group-merge">
+								<input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+							</div>
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<label class="form-label" for="password">Konfirmasi password</label>
+							<div class="input-group input-group-merge">
+								<input type="password" id="password" class="form-control" name="password2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password2" />
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+							</div>
+						</div>
+						<button type="submit" id="btn-daftar" class="btn btn-primary d-grid w-100">Daftar</button>
+					</form>
+					<p class="text-center">
+						<span>Already have an account?</span>
+						<a href="{{config->base_url}}login">
+							<span>Login</span>
+						</a>
+					</p>
+				</div>
+			</div>
+			<!-- Register Card -->
+		</div>
+	</div>
+</div>
+<!-- end halaman daftar -->
+<script>
+	//register ajax jquery
+	jQuery(document).ready(function(){
+		$("#formAuthentication").on("submit",function(event){
+			event.preventDefault();
+			let btn = $("#btn-daftar");
+			btn.html("loading...");
+			btn.addClass("disabled");
+			//form data 
+			let regdata = new FormData(event.target);
+			$.ajax({
+				url:"{{config->base_url}}ajax/auth?auth=register",
+				type:"POST",
+				data:regdata,
+				processData:false,
+				contentType:false,
+				cache:false,
+				success:function(e){
+					const success = e.success ?? false;
+					if (success) {
+						Swal.fire({
+							icon:"success",
+							text:`${e.message}`
+						});
+						btn.html("Daftar");
+						btn.html("Mengalihkan...");
+						setTimeout(function(){
+							location.href="{{config->base_url}}login";
+						},3000);
+					} else {
+						if (e.code == 200) {
+							Swal.fire({
+								icon:"error",
+								text:`${e.message}`
+							});
+							btn.html("Daftar");
+							btn.removeClass("disabled");
+						} else {
+							alert(`CODE: ${e.code} \n success:${e.success} \n error: ${e.message}`);
+						}
+					}
+				}
+			})
+		});
+	});
+</script>
