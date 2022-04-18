@@ -30,19 +30,24 @@ class Email
 	public function to($to = "", $toName = "") {
 		$this->to = $to;
 		$this->toName = $toName;
+		return $this;
 	}
 	public function from($from = "", $fromName = "") {
 		$this->from = $from;
 		$this->fromName = $fromName;
+		return $this;
 	}
 	public function subject($subject) {
 		$this->subject = $subject;
+		return $this;
 	}
 	public function replyto($reply = "") {
 		$this->replyto = $replyto;
+		return $this;
 	} 
 	public function content($text = "") {
 		$this->content = $text;
+		return $this;
 	}
 	public function _server_config() {
 		$this->mail->isSMTP();
