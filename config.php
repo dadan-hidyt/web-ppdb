@@ -12,10 +12,11 @@ $conf['site_title'] = "SMK 2 HIDYT";
 $conf['site_url'] = "";//biarkan kosong;
 //configurasi utnuk koneksi ke smtp
 $conf['smtp_config'] = array(
-	"host"     =>"",
-	"port"     =>"",
-	"email"	   =>"",
-	"password" =>
+	"host"=>"mail.ardevs-group.my.id",
+	"port"=>"465",
+	"username"=>"suport@ardevs-group.my.id",
+	"password"=> "dadanhidayat2003",
+	"smtp_secure"=> "ssl"
 );
 
 ?>

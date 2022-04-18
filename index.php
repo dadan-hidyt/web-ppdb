@@ -9,8 +9,10 @@
 define("ROOT_PATH", __DIR__);
 #cek apakah file init.php ada
 $init_file = sprintf("%s/%s",ROOT_PATH,"sys/init.php");
-if (false === file_exists($init_file)) {
-	die("Server Down");
+if (file_exists($init_file)) {
+	require $init_file;
+} else {
+	die("Init file not found in server");
 }
 #mendefinisikan route
 $route = "main/MainPage";

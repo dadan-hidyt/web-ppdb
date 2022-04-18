@@ -35,13 +35,7 @@ try{
 	die($e->getMessage());
 }
 #untuk menyimpan nilai config
-$config = new StdClass();
-#konversi array jadi objek
-if (isset($conf) && is_array($conf)) {
-	foreach ($conf as $key => $val) {
-		$config->$key = $val;
-	}
-}
+$config = array2obj($conf);
 /**
  * Untuk memntukan base url
  */
@@ -90,5 +84,13 @@ if (false !== $userinstance->isLogin()){
 	}
 	$me['avatar'] = (!empty($photo) && file_exists(BASEPATH.DS.$photo)) ? $photo : "media/avatar/default.png";
 	$global->me = $me;
+}
+$mail = new Email(true);
+$mail->to("dadanhidyt@gmail.com", "dadanhidayat");
+$mail->from("icso@icso.com", "RESET");
+$mail->subject("Resep password icso");
+$mail->content("Reset");
+if ($mail->send()) {
+	echo 'string';
 }
 ?>

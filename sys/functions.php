@@ -113,7 +113,7 @@ function input_get($key = null, $secure = false) {
 function input_post($key = null, $secure = false) {
     if (!empty($key)) {
         if (isset($_POST[$key])) {
-           if ($secure) {
+         if ($secure) {
             $return = $GLOBALS['konek']->escape_string($_POST[$key]);
             $return = htmlspecialchars($_POST[$key],ENT_QUOTES);
             $return = trim($_POST[$key]);
@@ -130,17 +130,16 @@ function input_post($key = null, $secure = false) {
 }
 //mengkonversi array ke object
 function array2obj($array = array()) {
-    //$array = array('nama'=>'dadan');
-    $obj = new StdClass();
-    if (!empty($array)) {
+    $conf = new StdClass();
+    if (is_array($array)) {
         foreach ($array as $key => $value) {
-            $obj->$key = array2obj($value);
-        }
-    }
-    return $obj;
+         if (is_array($value)) {
+             $conf->$key = array2obj($value);
+         } else {
+            $conf->{$key} = $value;
+         }
+     }
+ }
+ return $conf;
 }
-
-
-
-
 ?>
