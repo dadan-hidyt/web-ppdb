@@ -85,12 +85,4 @@ if (false !== $userinstance->isLogin()){
 	$me['avatar'] = (!empty($photo) && file_exists(BASEPATH.DS.$photo)) ? $photo : "media/avatar/default.png";
 	$global->me = $me;
 }
-$mail = new Email(true);
-$mail->to("dadanhidyt@gmail.com", "dadanhidayat");
-$mail->from("icso@icso.com", "RESET");
-$mail->subject("Resep password icso");
-$mail->content("Reset");
-if ($mail->send()) {
-	echo 'string';
-}
 ?>

@@ -46,7 +46,7 @@ class Email
 	}
 	public function _server_config() {
 		$this->mail->isSMTP();
-		$this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+		$this->mail->SMTPDebug = false;
 		$this->mail->SMTPAuth = true;
 		$this->mail->SMTPSecure = $this->config->smtp_config->smtp_secure;
 		$this->mail->Host = $this->config->smtp_config->host;
@@ -57,9 +57,10 @@ class Email
 	public function send() {
 		$this->_server_config();
 		$from = $this->config->smtp_config->username;
-		if (empty($this->from) || empty($this->from_name)) {
+		$name = $this->config->smtp_config->name;
+		if (empty($this->from) || empty($this->fromName)) {
 			$this->from = $from;
-			$this->from_name = $from;
+			$this->fromName = $name;
 		}
 		//setting recive
 		$this->mail->isHTML(true);
@@ -68,7 +69,7 @@ class Email
 		if (!empty($this->replyto)) {
 			$this->mail->AddReplyTo($this->replyto, "AUTEN");
 		}
-		$this->Subject($this->subject);
+		$this->mail->Subject = $this->subject;
 		$this->mail->Body = $this->content;
 		$this->mail->AltBody = "lorem";
 		if ($this->mail->send()) {

@@ -15,6 +15,7 @@ $conf['smtp_config'] = array(
 	"host"=>"mail.ardevs-group.my.id",
 	"port"=>"465",
 	"username"=>"suport@ardevs-group.my.id",
+	"name"=>"Suport System Ardevs",
 	"password"=> "dadanhidayat2003",
 	"smtp_secure"=> "ssl"
 );
