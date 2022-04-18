@@ -5,6 +5,18 @@ use PHPMailer\PHPMailer\Exception;
 /**
  * Class untuk mengirim email
  * @author dadanhidayat <dadanhidyt@gmal.com>
+ * --BASIC USAGE--
+ * $mail = new Email();
+ * $send = $mail->to('example@gmail.com")
+ * ->from('foo@bar.com')
+ * ->subject('welcome')
+ * ->content('Hiii foo')
+ * ->send();
+ * if($send){
+ * 		echo "successful";
+ * } else {
+ * 		echo "send mail failed";
+ * }
  */
 class Email 
 {
