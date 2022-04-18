@@ -2,6 +2,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+/**
+ * Class untuk mengirim email
+ * @author dadanhidayat <dadanhidyt@gmal.com>
+ */
 class Email 
 {
 	private $config;
@@ -19,6 +23,7 @@ class Email
 	private $subject;
 	private $fromName;
 	private $content;
+	private $replyName;
 	public function __construct($debug = false) {
 		$this->config = $GLOBALS['config'];
 		if ($debug == true) {
@@ -27,22 +32,34 @@ class Email
 		$this->mail = new PHPMailer($this->debug);
 
 	}
+	/**
+	 * @param string $to
+	 * @param string $toName
+	 */
 	public function to($to = "", $toName = "") {
 		$this->to = $to;
 		$this->toName = $toName;
 		return $this;
 	}
+	/**
+	 * @param string $from
+	 * @param string $fromName
+	 */
 	public function from($from = "", $fromName = "") {
 		$this->from = $from;
 		$this->fromName = $fromName;
 		return $this;
 	}
+	/**
+	 * @param string $subject
+	 */
 	public function subject($subject) {
 		$this->subject = $subject;
 		return $this;
 	}
-	public function replyto($reply = "") {
+	public function replyto($reply = "", $replyName = "") {
 		$this->replyto = $replyto;
+		$this->replyName = $replyName;
 		return $this;
 	} 
 	public function content($text = "") {
