@@ -36,6 +36,7 @@ class Email
 	private $fromName;
 	private $content;
 	private $replyName;
+	private $altContent;
 	public function __construct($debug = false) {
 		$this->config = $GLOBALS['config'];
 		if ($debug == true) {
@@ -74,10 +75,23 @@ class Email
 		$this->replyName = $replyName;
 		return $this;
 	} 
+	/**
+	 * @param string $text
+	 * Text yang akan di kirimkan ke email
+	 */
 	public function content($text = "") {
 		$this->content = $text;
 		return $this;
 	}
+	/**
+	 * for alternative body
+	 * */
+	public function alt_content($text = "") {
+		$this->altContent = $text;
+	}
+	/**
+	 * server configuration 
+	 * */
 	public function _server_config() {
 		$this->mail->isSMTP();
 		$this->mail->SMTPDebug = false;
@@ -88,6 +102,9 @@ class Email
 		$this->mail->Username = $this->config->smtp_config->username;
 		$this->mail->Password = $this->config->smtp_config->password;
 	}
+	/**
+	 * send
+	 * */
 	public function send() {
 		$this->_server_config();
 		$from = $this->config->smtp_config->username;

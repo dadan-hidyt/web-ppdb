@@ -1,4 +1,9 @@
 <?php
+/**
+ * class user
+ * @author dadanhidayat
+ * @package Includes
+ */
 class User {
     private $db;
     public $userinfo;

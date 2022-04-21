@@ -57,7 +57,7 @@ class Pendaftaran{
 		$kode_pendaftaran = $this->kodePendaftaran;
 		if ($query = $this->db->query("SELECT kode_pendaftaran,status FROM tbl_formulir_pendaftaran WHERE kode_pendaftaran='$kode_pendaftaran'")) {
 			if ($query->num_rows > 0) {
-				return $query->fetch_assoc();
+				return true;
 			} else {	
 				return false;
 			}

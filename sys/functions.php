@@ -79,6 +79,10 @@ function field_kosong($data = "", $replace = "-") {
         return $data;
     }
 }
+/**
+ * fungsi untuk mendeteksi apakah request dari ajax atau bukan
+ * @return boolean
+ * */
 function is_ajax() {
     if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
         if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == "xmlhttprequest"){
@@ -87,6 +91,12 @@ function is_ajax() {
     }
     return false;
 }
+/**
+ * Fungsi untuk mendapatkan data dari method get
+ * dan lalu di sanitize atau di bersihkan dari karakter
+ * @param string $Key
+ * @param boolean $secure
+ */
 function input_get($key = null, $secure = false) {
     if (!empty($key)) {
         if (isset($_GET[$key])) {
@@ -107,6 +117,7 @@ function input_get($key = null, $secure = false) {
 }
 /**
  * Fungsi untuk mendapatkan data dari method post
+ * dan lalu di sanitize atau di bersihkan dari karakter
  * @param string $Key
  * @param boolean $secure
  */
@@ -128,7 +139,11 @@ function input_post($key = null, $secure = false) {
     return $_POST;
 }
 }
-//mengkonversi array ke object
+/**
+ * fungsi untuk mengkonversi array ke objet
+ * @param array $array
+ * @return object
+ * */
 function array2obj($array = array()) {
     $conf = new StdClass();
     if (is_array($array)) {

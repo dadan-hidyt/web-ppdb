@@ -1,16 +1,22 @@
 <?php 
 define("APP_VERSION", "1.0");
-//setingan untuk database
+/**
+ * Configuration database
+ * */
 $conf = array();
 $conf['host'] = "localhost";
 $conf['user'] = "root";
 $conf['pass'] = "";
 $conf['dbname'] = "web_ppdb";
-//site title
-$conf['site_title'] = "SMK 2 HIDYT";
-//site url
-$conf['site_url'] = "";//biarkan kosong;
-//configurasi utnuk koneksi ke smtp
+/**
+ * informasi website
+ * */
+$conf['site_title'] = "SMP 2 HIDYT";
+$conf['site_url'] = "";
+/**
+ * configuration stmp
+ * Untuk mengirim email
+ * */
 $conf['smtp_config'] = array(
 	"host"=>"mail.ardevs-group.my.id",
 	"port"=>"465",
